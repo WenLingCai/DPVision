@@ -1,5 +1,4 @@
 ﻿
-using DPVision.Common.FileFormat;
 using DPVision.Core;
 using DPVision.Model;
 using DPVision.Model.ROI;
@@ -30,7 +29,8 @@ namespace DPVToolTemplateMatch
     public class DPToolVTemplateMatch : ITool
     {
         public IImageDisplay imageDisplay;
-        public string Name 
+       
+        public string ToolName 
         {
             get;
             set;
@@ -38,8 +38,9 @@ namespace DPVToolTemplateMatch
         public string ToolType => "DPVToolTemplateMatch";
    
         public event EventHandler ParametersChanged;
-        public float runTime { get; private set; }
-    
+       
+        public float ToolRunTime { get; private set; }
+        public ResultState ToolState { get; private set; }
         public DPToolVTemplateMatch()
         {
            
@@ -70,86 +71,90 @@ namespace DPVToolTemplateMatch
             inputImage = imagedata;
         }
 
-        //
         // 获取参数
         public bool GetParam(string keyName, ref string keyValue)
         {
-            // 获取
-            PropertyInfo? propertyInfo = this.GetType().GetProperty(keyName);
-            if (propertyInfo!=null)
+            var propertyInfo = this.toolRunParams.GetType().GetProperty(keyName);
+            if (propertyInfo != null)
             {
-                object obj= propertyInfo.GetValue(this);
+                object obj = propertyInfo.GetValue(this.toolRunParams);
                 if (obj != null)
                 {
-                    keyValue= obj.ToString();
+                    keyValue = obj.ToString();
                     return true;
                 }
             }
             return false;
         }
 
-        // 设置参数
+        // 设置参数（支持常见类型转换，含bool、enum、nullable）
         public bool SetParam(string keyName, string keyValue)
         {
-            // 设置
-            PropertyInfo? propertyInfo = this.GetType().GetProperty(keyName);
+            var propertyInfo = this.toolRunParams.GetType().GetProperty(keyName);
             if (propertyInfo != null)
             {
-                propertyInfo.SetValue(this, keyValue);
-                return true;
-            }
+                try
+                {
+                    Type propType = propertyInfo.PropertyType;
 
+                    object value = null;
+                    if (propType.IsEnum)
+                    {
+                        value = Enum.Parse(propType, keyValue);
+                    }
+                    else if (propType == typeof(bool))
+                    {
+                        value = (keyValue == "1" || keyValue.ToLower() == "true");
+                    }
+                    else if (Nullable.GetUnderlyingType(propType) != null)
+                    {
+                        // 处理可空类型
+                        var underlyingType = Nullable.GetUnderlyingType(propType);
+                        value = string.IsNullOrEmpty(keyValue) ? null : Convert.ChangeType(keyValue, underlyingType);
+                    }
+                    else
+                    {
+                        value = Convert.ChangeType(keyValue, propType);
+                    }
+
+                    propertyInfo.SetValue(this.toolRunParams, value);
+                    return true;
+                }
+                catch
+                {
+                    // 类型转换失败
+                    return false;
+                }
+            }
             return false;
         }
 
-        public XmlElement SaveToXmlNode(XmlDocument doc, string nodeName)
+        public object ExportParameters()
         {
-            ToolRunParams param = toolRunParams as ToolRunParams;
-            var node = doc.CreateElement(nodeName);
-            node.SetAttribute("MinScore", param.MinScore.ToString());
-            node.SetAttribute("PyramidLevel", param.PyramidLevel.ToString());
-            node.SetAttribute("AngleStart", param.AngleStart.ToString());
-            node.SetAttribute("AngleEnd", param.AngleEnd.ToString());
-
-            if (param.FeatureRoi1 != null)
+            var serializer = new XmlSerializer(typeof(ToolRunParams));
+            using (var sw = new StringWriter())
             {
-                node.AppendChild(param.FeatureRoi1.SaveToXmlNode(doc, "FeatureRoi1"));
+                serializer.Serialize(sw, toolRunParams);
+                return sw.ToString(); // 返回XML格式字符串
             }
-            if (param.FeatureRoi2 != null)
-            {
-                node.AppendChild(param.FeatureRoi2.SaveToXmlNode(doc, "FeatureRoi2"));
-            }
-            if (param.FeatureRoi3 != null)
-            {
-                node.AppendChild(param.FeatureRoi3.SaveToXmlNode(doc, "FeatureRoi3"));
-            }
-            return node;
         }
 
-        public void LoadFromXmlNode(XmlElement node)
+        public void ImportParameters(object data)
         {
-            ToolRunParams param = toolRunParams as ToolRunParams;
-            if (node != null)
+            if (data == null) return;
+            var xml = data.ToString();
+            var serializer = new XmlSerializer(typeof(ToolRunParams));
+            using (var sr = new StringReader(xml))
             {
-                param.MinScore = DPVisionCore.Instance.ReadFloatAttr(node, "MinScore");
-                param.PyramidLevel = DPVisionCore.Instance.ReadIntAttr(node, "PyramidLevel");
-                param.AngleStart = DPVisionCore.Instance.ReadFloatAttr(node, "AngleStart");
-                param.AngleEnd = DPVisionCore.Instance.ReadFloatAttr(node, "AngleEnd");
-
-                DPVisionCore.Instance.LoadRoi(node, "FeatureRoi1", param.FeatureRoi1);
-                DPVisionCore.Instance.LoadRoi(node, "FeatureRoi2", param.FeatureRoi2);
-                DPVisionCore.Instance.LoadRoi(node, "FeatureRoi3", param.FeatureRoi3);
+                toolRunParams = (ToolRunParams)serializer.Deserialize(sr);
             }
-
         }
+
         public ResultState Run(IImageDisplay image)
         {
             
             return ResultState.OK;
         }
-        public float GetAlgRunTime()
-        {
-            return runTime;
-        }
+       
     }
 }

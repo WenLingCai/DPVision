@@ -7,15 +7,28 @@ namespace DPVision.Model.Tool
     public interface ITool
     {
         string ToolType { get; }
-        float runTime { get; }
-        string Name { get; set; }
-     
-        event EventHandler ParametersChanged; // 通知UI参数有变
+        float ToolRunTime { get; }
+        string ToolName { get;}
+        ResultState ToolState { get;}
+        event EventHandler ParametersChanged;
         bool GetParam(string keyName, ref string keyValue);
         bool SetParam(string keyName, string keyValue);
-        XmlElement SaveToXmlNode(XmlDocument doc, string nodeName);
-        void LoadFromXmlNode(XmlElement node);
+        object ExportParameters();
+        void ImportParameters(object data);
         ResultState Run(IImageDisplay control=null);
-        float GetAlgRunTime();
+    }
+
+    public class ToolParameter
+    {
+        public string Name { get; set; }
+        public object Value { get; set; }
+        public string Type { get; set; }
+        // 构造函数省略
+        public ToolParameter(string name,object value,string type) 
+        {
+            Name=name;
+            Value=value;
+            Type=type;
+        }
     }
 }

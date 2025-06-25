@@ -3,7 +3,9 @@ namespace DPVision.Model.Tool
 {
     public interface IToolUI
     {
-        void SetViewModel(object viewModel);
+        string ToolType { get; }
+         string UIVariant { get; }
+        void SetTool(ITool tool);
         object GetControl();
     }
 }

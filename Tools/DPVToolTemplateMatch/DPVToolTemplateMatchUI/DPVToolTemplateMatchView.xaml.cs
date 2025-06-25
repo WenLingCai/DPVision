@@ -1,18 +1,21 @@
+using DPVision.Model.Tool;
 using System.Windows.Controls;
-using ToolContracts;
+
 
 namespace DPVToolTemplateMatchUI
 {
     public partial class DPVToolTemplateMatchView : UserControl, IToolUI
     {
+        public string ToolType => "DPVToolTemplateMatch";
+        public string UIVariant => "Full";
         public DPVToolTemplateMatchView()
         {
-            InitializeComponent();
+       
         }
 
-        public void SetViewModel(object viewModel)
+        public void SetTool(ITool tool)
         {
-            this.DataContext = viewModel;
+          
         }
 
         public object GetControl() => this;

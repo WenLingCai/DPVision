@@ -17,7 +17,8 @@ namespace DPVision.Core
 
         public DPVisionCore()
         {
-            ToolRegistry.LoadTools("./Plugins/Tools/");
+            ToolFactory.LoadTool("./Plugins/Tools/");
+            ToolFactory.LoadUIPlugins("./Plugins/Tools/");
         }
         private static DPVisionCore instance = new DPVisionCore();
         public static DPVisionCore Instance
@@ -50,34 +51,7 @@ namespace DPVision.Core
         }
         #endregion
 
-        #region 
-
-        // 1. 读取float属性的通用函数
-      public float ReadFloatAttr(XmlElement node, string attrName, float defaultValue = 0)
-        {
-            if (node == null) return defaultValue;
-            float value;
-            return float.TryParse(node.GetAttribute(attrName), out value) ? value : defaultValue;
-        }
-
-        // 2. 读取int属性的通用函数
-       public int ReadIntAttr(XmlElement node, string attrName, int defaultValue = 0)
-        {
-            if (node == null) return defaultValue;
-            int value;
-            return int.TryParse(node.GetAttribute(attrName), out value) ? value : defaultValue;
-        }
-
-        // 3. 读取并加载Roi子节点的通用函数
-        public void LoadRoi(XmlElement node, string roiName, RoiBase roiObj)
-        {
-            var roiNode = node.SelectSingleNode(roiName) as XmlElement;
-            if (roiNode != null && roiObj != null)
-                roiObj.LoadFromXmlNode(roiNode);
-        }
-
-
-        #endregion
+      
         #region /****静态变量(全局公用变量)****/ 
 
 

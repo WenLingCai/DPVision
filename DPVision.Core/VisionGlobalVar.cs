@@ -11,7 +11,6 @@ namespace DPVision.Core
 {
     public class VisionGlobalVar
     {
-        public static LanguageType languageType = LanguageType.non;
-     
+       
     }
 }

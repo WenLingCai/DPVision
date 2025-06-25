@@ -12,11 +12,17 @@ namespace DPVision.Model.Flow
     public interface IFlowBase
     {
         string FlowType { get; }
-        float runTime { get; }
+        string FlowName { get; }
 
+        float runTime { get; }
+        List<ITool> toolList { get; set; }
+        List<IToolUI> toolUIList { get; set; }
         void Save(string path);
         void Load(string path);
+
         ResultState Run(IImageDisplay control = null);
         float GetFlowRunTime();
+       
+        
     }
 }

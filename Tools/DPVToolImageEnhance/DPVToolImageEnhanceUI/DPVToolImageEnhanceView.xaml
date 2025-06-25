@@ -1,0 +1,74 @@
+<Window x:Class="DPVToolImageEnhanceUI.DPVToolFindCicleView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="参数与图像显示" Height="600" Width="1000">
+    <DockPanel>
+        <!-- 底部操作区（按钮在左边） -->
+        <Border DockPanel.Dock="Bottom" Background="#F9F9F9" Padding="10,6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- 执行按钮 -->
+                <Button x:Name="ExecuteButton" Content="执行" Width="80" Margin="0,0,10,0" Grid.Column="4"/>
+                <!-- 保存按钮 -->
+                <Button x:Name="SaveButton" Content="保存" Width="80" Margin="0,0,20,0" Grid.Column="5"/>
+                <!-- 显示占位 -->
+                <TextBlock Grid.Column="2"/>
+                <!-- 工具运行耗时 -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Right">
+                    <TextBlock Text="耗时: " VerticalAlignment="Center" Foreground="Gray"/>
+                    <TextBlock x:Name="ElapsedTimeText" Text="0 ms" VerticalAlignment="Center" FontWeight="Bold"/>
+                </StackPanel>
+                <!-- 工具运行结果 -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right">
+                    <TextBlock Text="结果: " VerticalAlignment="Center" Foreground="Gray"/>
+                    <TextBlock x:Name="ResultText" Text="-" VerticalAlignment="Center" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 主体布局 -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- 左侧图像显示 -->
+                <ColumnDefinition Width="*" />
+                <!-- 右侧参数显示 -->
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 图像显示区 -->
+            <Border Grid.Column="0" Background="#EEE" Margin="5" CornerRadius="5">
+                <Image x:Name="ImageView" Stretch="Uniform"/>
+            </Border>
+
+            <!-- 参数Tab页面 -->
+            <TabControl Grid.Column="1" x:Name="ParamTabControl" Margin="5">
+                <TabItem Header="参数页1">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="参数A"/>
+                        <TextBox Width="200" Margin="0,5,0,10"/>
+                        <TextBlock Text="参数B"/>
+                        <CheckBox Content="启用" Margin="0,5,0,10"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="参数页2">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="参数X"/>
+                        <TextBox Width="200" Margin="0,5,0,10"/>
+                        <TextBlock Text="参数Y"/>
+                        <ComboBox Width="200" Margin="0,5,0,10">
+                            <ComboBoxItem Content="选项1"/>
+                            <ComboBoxItem Content="选项2"/>
+                        </ComboBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</Window>

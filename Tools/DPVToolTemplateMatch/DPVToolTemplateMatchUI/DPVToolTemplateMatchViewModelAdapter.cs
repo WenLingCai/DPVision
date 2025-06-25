@@ -9,13 +9,11 @@ namespace DPVToolTemplateMatchUI
     {
         public ITool Logic { get; }
         public ICommand ExecuteCommand { get; }
-        public object Parameters => Logic.Parameters;
-
+        
         public ToolBViewModelAdapter(ITool logic)
         {
             Logic = logic;
             ExecuteCommand = new RelayCommand(() => Logic.Run());
-            Logic.ParametersChanged += (s, e) => OnPropertyChanged(nameof(Parameters));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
