@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="DPVision.Calibration.Views.DPVCaliView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DPVision.Calibration"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d" 
+        d:DesignWidth="800"
+        d:DesignHeight="500"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+
+            <!-- 主体区域 -->
+    <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <!-- ImageView 填充剩余空间 -->
+                    <ColumnDefinition />
+                    <!-- Flow UI 固定宽度300 -->
+                <ColumnDefinition Width="400" />
+            </Grid.ColumnDefinitions>
+
+                <!-- ImageView 控件，填满左侧 -->
+                <Border Grid.Column="0" Background="#EEE" Margin="5,5,5,5">
+                    <Image x:Name="MainImageView" Stretch="Uniform" />
+                </Border>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- 上方品牌选择和添加删除 -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,8,0,8">
+                    <TextBlock Text="标定模式:" VerticalAlignment="Center" Width="60"/>
+                    <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrand}" Width="100"/>
+                </StackPanel>
+
+                <!-- Flow UI展示区 -->
+                <Border  Grid.Row="1" Background="#CCF" Margin="5,5,5,5" CornerRadius="5" >
+                    <!-- 这里放置你的Flow相关UI，可以换成ContentControl绑定不同Flow界面 -->
+                    <ContentControl x:Name="FlowUiContent"/>
+                </Border>
+
+            </Grid>
+
+       
+            </Grid>
+    
+    </UserControl>

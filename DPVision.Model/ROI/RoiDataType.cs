@@ -15,7 +15,7 @@ namespace DPVision.Model.ROI
 
     #region Base
 
-    public abstract class RoiBase
+    public abstract class cRoiBase
     {
         /// <summary>
         /// 返回当前ROI类型名，等于节点名
@@ -33,22 +33,22 @@ namespace DPVision.Model.ROI
         /// <summary>
         /// 统一反序列化工厂。根据节点名自动构造对应Roi对象。
         /// </summary>
-        public static RoiBase FromXml(XmlElement elem)
+        public static cRoiBase FromXml(XmlElement elem)
         {
             if (elem == null) throw new ArgumentNullException("elem");
             string type = elem.Name;
             if (type == "RoiRectangle")
-                return RoiRectangle.FromXml(elem);
+                return cRoiRectangle.FromXml(elem);
             else if (type == "RoiRectangleAffine")
-                return RoiRectangleAffine.FromXml(elem);
+                return cRoiRectangleAffine.FromXml(elem);
             else if (type == "RoiCircle")
-                return RoiCircle.FromXml(elem);
+                return cRoiCircle.FromXml(elem);
             else if (type == "RoiPoint")
-                return RoiPoint.FromXml(elem);
+                return cRoiPoint.FromXml(elem);
             else if (type == "RoiSegment")
-                return RoiSegment.FromXml(elem);
+                return cRoiSegment.FromXml(elem);
             else if (type == "RoiEllipse")
-                return RoiEllipse.FromXml(elem);
+                return cRoiEllipse.FromXml(elem);
             else
                 throw new NotSupportedException("Unknown ROI type: " + type);
         }
@@ -57,7 +57,7 @@ namespace DPVision.Model.ROI
 
 
     #region ROI Types
-    public class RoiRectangle : RoiBase
+    public class cRoiRectangle : cRoiBase
     {
         public override string RoiType => "RoiRectangle";
 
@@ -69,11 +69,11 @@ namespace DPVision.Model.ROI
     
         public float Height { get; set; }
 
-        public RoiRectangle()
+        public cRoiRectangle()
         {
 
         }
-        public RoiRectangle(float x, float y, float width, float height)
+        public cRoiRectangle(float x, float y, float width, float height)
         {
             X = x; Y = y; Width = width; Height = height;
         }
@@ -88,9 +88,9 @@ namespace DPVision.Model.ROI
             return node;
         }
 
-        public static RoiRectangle FromXml(XmlElement elem)
+        public static cRoiRectangle FromXml(XmlElement elem)
         {
-            RoiRectangle roi = new RoiRectangle();
+            cRoiRectangle roi = new cRoiRectangle();
             float value;
             if (float.TryParse(elem.GetAttribute("X"), out value)) roi.X = value;
             if (float.TryParse(elem.GetAttribute("Y"), out value)) roi.Y = value;
@@ -101,7 +101,7 @@ namespace DPVision.Model.ROI
 
     }
 
-    public class RoiRectangleAffine : RoiBase
+    public class cRoiRectangleAffine : cRoiBase
     {
         public float X { get; set; }
         public float Y { get; set; }
@@ -109,8 +109,8 @@ namespace DPVision.Model.ROI
         public float Height { get; set; }
         public float Angle { get; set; }
 
-        public RoiRectangleAffine() { }
-        public RoiRectangleAffine(float x, float y, float width, float height, float angle)
+        public cRoiRectangleAffine() { }
+        public cRoiRectangleAffine(float x, float y, float width, float height, float angle)
         {
             X = x; Y = y; Width = width; Height = height; Angle = angle;
         }
@@ -126,9 +126,9 @@ namespace DPVision.Model.ROI
             return node;
         }
 
-        public static RoiRectangleAffine FromXml(XmlElement elem)
+        public static cRoiRectangleAffine FromXml(XmlElement elem)
         {
-            RoiRectangleAffine roi = new RoiRectangleAffine();
+            cRoiRectangleAffine roi = new cRoiRectangleAffine();
             float value;
             if (float.TryParse(elem.GetAttribute("X"), out value)) roi.X = value;
             if (float.TryParse(elem.GetAttribute("Y"), out value)) roi.Y = value;
@@ -139,14 +139,14 @@ namespace DPVision.Model.ROI
         }
     }
 
-    public class RoiCircle : RoiBase
+    public class cRoiCircle : cRoiBase
     {
         public float X { get; set; }
         public float Y { get; set; }
         public float Radius { get; set; }
 
-        public RoiCircle() { }
-        public RoiCircle(float x, float y, float radius)
+        public cRoiCircle() { }
+        public cRoiCircle(float x, float y, float radius)
         {
             X = x; Y = y; Radius = radius;
         }
@@ -160,9 +160,9 @@ namespace DPVision.Model.ROI
             return node;
         }
 
-        public static RoiCircle FromXml(XmlElement elem)
+        public static cRoiCircle FromXml(XmlElement elem)
         {
-            RoiCircle roi = new RoiCircle();
+            cRoiCircle roi = new cRoiCircle();
             float value;
             if (float.TryParse(elem.GetAttribute("X"), out value)) roi.X = value;
             if (float.TryParse(elem.GetAttribute("Y"), out value)) roi.Y = value;
@@ -171,13 +171,13 @@ namespace DPVision.Model.ROI
         }
     }
 
-    public class RoiPoint : RoiBase
+    public class cRoiPoint : cRoiBase
     {
         public float X { get; set; }
         public float Y { get; set; }
 
-        public RoiPoint() { }
-        public RoiPoint(float x, float y)
+        public cRoiPoint() { }
+        public cRoiPoint(float x, float y)
         {
             X = x; Y = y;
         }
@@ -190,9 +190,9 @@ namespace DPVision.Model.ROI
             return node;
         }
 
-        public static RoiPoint FromXml(XmlElement elem)
+        public static cRoiPoint FromXml(XmlElement elem)
         {
-            RoiPoint roi = new RoiPoint();
+            cRoiPoint roi = new cRoiPoint();
             float value;
             if (float.TryParse(elem.GetAttribute("X"), out value)) roi.X = value;
             if (float.TryParse(elem.GetAttribute("Y"), out value)) roi.Y = value;
@@ -200,15 +200,15 @@ namespace DPVision.Model.ROI
         }
     }
 
-    public class RoiSegment : RoiBase
+    public class cRoiSegment : cRoiBase
     {
         public float X1 { get; set; }
         public float Y1 { get; set; }
         public float X2 { get; set; }
         public float Y2 { get; set; }
 
-        public RoiSegment() { }
-        public RoiSegment(float x1, float y1, float x2, float y2)
+        public cRoiSegment() { }
+        public cRoiSegment(float x1, float y1, float x2, float y2)
         {
             X1 = x1; Y1 = y1; X2 = x2; Y2 = y2;
         }
@@ -223,9 +223,9 @@ namespace DPVision.Model.ROI
             return node;
         }
 
-        public static RoiSegment FromXml(XmlElement elem)
+        public static cRoiSegment FromXml(XmlElement elem)
         {
-            RoiSegment roi = new RoiSegment();
+            cRoiSegment roi = new cRoiSegment();
             float value;
             if (float.TryParse(elem.GetAttribute("X1"), out value)) roi.X1 = value;
             if (float.TryParse(elem.GetAttribute("Y1"), out value)) roi.Y1 = value;
@@ -236,7 +236,7 @@ namespace DPVision.Model.ROI
     }
 
 
-    public class RoiEllipse : RoiBase
+    public class cRoiEllipse : cRoiBase
     {
         public float X { get; set; }
         public float Y { get; set; }
@@ -244,8 +244,8 @@ namespace DPVision.Model.ROI
         public float Radius2 { get; set; }
         public float Angle { get; set; }
 
-        public RoiEllipse() { }
-        public RoiEllipse(float x, float y, float radius1, float radius2, float angle)
+        public cRoiEllipse() { }
+        public cRoiEllipse(float x, float y, float radius1, float radius2, float angle)
         {
             X = x; Y = y; Radius1 = radius1; Radius2 = radius2; Angle = angle;
         }
@@ -261,9 +261,9 @@ namespace DPVision.Model.ROI
             return node;
         }
 
-        public static RoiEllipse FromXml(XmlElement elem)
+        public static cRoiEllipse FromXml(XmlElement elem)
         {
-            RoiEllipse roi = new RoiEllipse();
+            cRoiEllipse roi = new cRoiEllipse();
             float value;
             if (float.TryParse(elem.GetAttribute("X"), out value)) roi.X = value;
             if (float.TryParse(elem.GetAttribute("Y"), out value)) roi.Y = value;

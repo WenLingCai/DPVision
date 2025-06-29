@@ -13,6 +13,7 @@ using LiveCharts.Wpf;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using DPVision.ViewModels;
 
 
 namespace DPVision
@@ -31,9 +32,9 @@ namespace DPVision
             if (!createdNew)
             {
                 //应用程序已经在运行！当前的执行退出。
-                Application.Current.Shutdown();
+                //Application.Current.Shutdown();
             }
-            return Container.Resolve<MainWindow>();
+            return Container.Resolve<MainView>();
         }
 
       
@@ -41,11 +42,16 @@ namespace DPVision
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterForNavigation<MainView, MainViewModel>();
 
         }
 
-      
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            // 指定模块dll存放插件目录
+            return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
+        }
+
 
 
     }

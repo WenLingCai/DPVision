@@ -1,0 +1,23 @@
+﻿<Window x:Class="DPVision.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        Title="主界面" Height="600" Width="900"
+        WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <!-- 主内容区域 -->
+        <ContentControl Grid.Row="0" prism:RegionManager.RegionName="MainRegion"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <!-- 底部导航栏 -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" DockPanel.Dock="Bottom" Height="60" Background="#EEE" HorizontalAlignment="Center">
+            <Button Content="标定" Command="{Binding NavigateCommand}" CommandParameter="DPVCaliView" Width="120" Margin="16"/>
+            <Button Content="流程配置" Command="{Binding NavigateCommand}" CommandParameter="DPVFlowView" Width="120" Margin="16"/>
+            <Button Content="相机管理" Command="{Binding NavigateCommand}" CommandParameter="DPVCamerasView" Width="120" Margin="16"/>
+            <Button Content="控件操作" Command="{Binding NavigateCommand}" CommandParameter="DPVImageView" Width="120" Margin="16"/>
+        </StackPanel>
+       
+    </Grid>
+</Window>

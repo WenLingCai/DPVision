@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="DPVision.ImageViewEx.Views.DPVImageView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:local="clr-namespace:DPVision.ImageViewEx"
+
+ xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+ xmlns:prism="http://prismlibrary.com/"
+ prism:ViewModelLocator.AutoWireViewModel="True" 
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+mc:Ignorable="d" 
+   d:DesignWidth="800"
+   d:DesignHeight="500"
+   HorizontalAlignment="Stretch"
+   VerticalAlignment="Stretch">
+
+    <!-- 主体区域 -->
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <!-- ImageView 填充剩余空间 -->
+            <ColumnDefinition Width="80"/>
+            <!-- ImageViewEx UI 固定宽度300 -->
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!-- 左侧按钮区域，停靠在左边 -->
+        <StackPanel Grid.Column="0" DockPanel.Dock="Left" Width="80" Background="LightGray">
+            <Button Content="圆形" Margin="5"/>
+            <Button Content="方形" Margin="5"/>
+        </StackPanel>
+        <Border Grid.Column="1" Background="#EEE" Margin="5,5,5,5">
+            <Image x:Name="MainImageView" Stretch="Uniform" />
+        </Border>
+
+
+    </Grid>
+</UserControl>

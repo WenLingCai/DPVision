@@ -26,17 +26,17 @@ namespace DPVToolTemplateMatch
         internal Rect mTempRect = new Rect(0, 0, 0, 0);//模板区域
         internal Rect mSearchRect = new Rect(0, 0, 0, 0);//搜索区域
         [NonSerialized]
-        internal RoiBase mTempRoi = null;//模版框
+        internal cRoiBase mTempRoi = null;//模版框
         [NonSerialized]
-        internal RoiBase mSearchRoi = null;//搜索框
+        internal cRoiBase mSearchRoi = null;//搜索框
         [NonSerialized]
-        internal RoiBase mAimRoi = null;//目标框
+        internal cRoiBase mAimRoi = null;//目标框
         [NonSerialized]
         internal bool mReTrain = false;//重新训练标志
 
-        RoiBase FeatureRoi1;
-        RoiBase FeatureRoi2;
-        RoiBase FeatureRoi3;
+        cRoiBase FeatureRoi1;
+        cRoiBase FeatureRoi2;
+        cRoiBase FeatureRoi3;
         #endregion
 
     }

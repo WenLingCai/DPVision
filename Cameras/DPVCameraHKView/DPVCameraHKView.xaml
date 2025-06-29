@@ -1,0 +1,58 @@
+<UserControl x:Class="DPVCameraHKView.DPVCameraHKView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://prismlibrary.com/"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid Background="White" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="IP地址：" Width="100"/>
+                <TextBox Width="180" Text="{Binding CameraIP, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="触发源：" Width="100"/>
+                <ComboBox Width="180" ItemsSource="{Binding TriggerSources}" 
+                          SelectedItem="{Binding TriggerSource, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="触发方式：" Width="100"/>
+                <ComboBox Width="180" ItemsSource="{Binding TriggerModes}" 
+                          SelectedItem="{Binding TriggerMode, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="曝光：" Width="100"/>
+                <TextBox Width="180" Text="{Binding Exposure, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="增益：" Width="100"/>
+                <TextBox Width="180" Text="{Binding Gain, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="超时时间(ms)：" Width="100"/>
+                <TextBox Width="180" Text="{Binding Timeout, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="图像是否旋转：" Width="100"/>
+                <CheckBox Content="旋转" IsChecked="{Binding IsRotate, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="旋转角度：" Width="100"/>
+                <ComboBox Width="180" ItemsSource="{Binding RotateAngles}" 
+                          SelectedItem="{Binding RotateAngle, Mode=TwoWay}"/>
+            </StackPanel>
+        </StackPanel>
+        <!-- 底部按钮 -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="连接" Width="80" Height="32" Margin="8,0" Command="{Binding ConnectCommand}"/>
+            <Button Content="断开" Width="80" Height="32" Margin="8,0" Command="{Binding DisconnectCommand}"/>
+            <Button Content="实时流" Width="80" Height="32" Margin="8,0" Command="{Binding LiveStreamCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
