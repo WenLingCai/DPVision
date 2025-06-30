@@ -4,9 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\..\DPVision\bin\$(Configuration)\net8.0-windows\Tools\</OutputPath>
+    <OutputPath>..\..\..\DPVision\bin\$(Configuration)\net8.0-windows\Tools\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

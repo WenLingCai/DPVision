@@ -8,11 +8,12 @@
     <BaseOutputPath></BaseOutputPath>
     <Platforms>AnyCPU;x64</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\..\DPVision\bin\$(Configuration)\net8.0-windows\Tools\</OutputPath>
+    <OutputPath>..\..\..\DPVision\bin\$(Configuration)\net8.0-windows\Tools\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\DPVision.Model\DPVision.Model.csproj" />
+    <ProjectReference Include="..\DPVToolImageEnhance\DPVToolImageEnhance.csproj" />
   </ItemGroup>
 
 </Project>
